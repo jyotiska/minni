@@ -9,8 +9,9 @@ __pycache__/
 
 # C extensions
 *.so
-*.html
 
+*.html
+*.json
 # Distribution / packaging
 .Python
 env/
