@@ -3,7 +3,7 @@ import sys
 import json
 from datetime import datetime
 
-page_content_start = """<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>%s</title><style type="text/css">body{margin:40px auto;max-width:650px;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}</style></head><body><header><h1>%s</h1><p>%s</p><hr></header>"""
+page_content_start = """<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>%s</title><style type="text/css">body{margin:40px auto;max-width:650px;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}pre{font-size:14px;background-color:#eee;padding:0 20px;}</style></head><body><header><h1>%s</h1><p>%s</p><hr></header>"""
 page_content_end = """<hr><p><center>Generated using <a href="https://github.com/jyotiska/minni">minni</a></center></p><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','%s','auto');ga('send','pageview');</script></body></html>"""
 
 
