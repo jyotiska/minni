@@ -27,7 +27,7 @@ def create_directory():
 def create_post(title):
     """Create a new post."""
     filename = "posts/" + title.lower().replace(" ", "_") + ".html"
-    post_date = "Posted at: " + datetime.now().strftime("%d-%m-%Y")
+    post_date = "Posted on: " + datetime.now().strftime("%d-%m-%Y")
 
     html_content = page_content_start % (title, title, post_date) + "\n\n" + "<!-- Write your content here -->" + "\n\n\n\n" + page_content_end % (ga_code)
 
@@ -41,7 +41,7 @@ def create_post(title):
 
     each_post_content = ""
     for each_post in posts_list:
-        each_post_content += '''<li><a href="%s">%s</a> - %s''' % (each_post["filename"], each_post["title"], each_post["posted"])
+        each_post_content += '''<li><a href="%s">%s</a> - %s</li>''' % (each_post["filename"], each_post["title"], each_post["posted"])
     posts_list_content = "<ul>%s</ul>" % (each_post_content)
     index_file_content = page_content_start % ("Blog Posts", "Blog Posts", "") + posts_list_content + page_content_end % (ga_code)
 
@@ -49,6 +49,7 @@ def create_post(title):
     index_file.write(index_file_content)
     index_file.close()
 
+    posts_list = posts_list[::-1]
     outfile = open('posts_list.json', 'w')
     outfile.write(json.dumps(posts_list, indent=4))
     outfile.close()
