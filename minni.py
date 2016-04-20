@@ -58,7 +58,7 @@ def create_post(title):
 
 if __name__ == '__main__':
     command = sys.argv[1]
-    ga_code = 'UA-57540602-1'
+    ga_code = 'UA-75679673-1'
 
     if command == "init":
         create_directory()
