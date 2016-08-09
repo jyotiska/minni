@@ -3,14 +3,17 @@ import sys
 import json
 from datetime import datetime
 
-page_content_start = """<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>%s</title><style type="text/css">body{margin:40px auto;max-width:650px;line-height:1.6;font-size:18px;color:#444;padding:0 10px}h1,h2,h3{line-height:1.2}pre{font-size:14px;background-color:#eee;padding:0 20px;}</style></head><body><header><h1>%s</h1><p>%s</p><hr></header>"""
-page_content_end = """<hr><p><center>Powered by <a href="https://github.com/jyotiska/minni">minni</a></center></p><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','%s','auto');ga('send','pageview');</script></body></html>"""
+page_content_start = open("templates/header").read()
+page_content_end = open("templates/footer").read()
 
 
 def create_directory():
     """Check if directories exist, create otherwise."""
     if not os.path.exists("posts"):
         os.makedirs("posts")
+
+    if not os.path.exists("contents"):
+        os.makedirs("contents")
 
     posts_list = []
     outfile = open('posts_list.json', 'w')
@@ -26,19 +29,21 @@ def create_directory():
 
 def create_post(title):
     """Create a new post."""
-    filename = "posts/" + title.lower().replace(" ", "_") + ".html"
-    post_date = "Posted on: " + datetime.now().strftime("%d-%m-%Y")
 
-    html_content = page_content_start % (title, title, post_date) + "\n\n" + "<!-- Write your content here -->" + "\n\n\n\n" + page_content_end % (ga_code)
-
+    # Create an empty contents file
+    filename = "contents/" + title.lower().replace(" ", "_") + ".html"
     outfile = open(filename, 'w')
-    outfile.write(html_content)
     outfile.close()
 
+    # Calculate the post date based on current date
+    post_date = "Posted on: " + datetime.now().strftime("%d-%m-%Y")
+
+    # Put the post in the posts list JSON file
     posts_list = json.load(open('posts_list.json'))
     posts_list.append({"title": title, "filename": filename, "posted": post_date})
     posts_list = posts_list[::-1]
 
+    # Write all posts list in the index file
     each_post_content = ""
     for each_post in posts_list:
         each_post_content += '''<li><a href="%s">%s</a> - %s</li>''' % (each_post["filename"], each_post["title"], each_post["posted"])
@@ -54,7 +59,38 @@ def create_post(title):
     outfile.write(json.dumps(posts_list, indent=4))
     outfile.close()
 
-    print "Post created at:", filename
+    print "Content file created. You can edit directly at: %s. Use <publish> with minni to publish all posts" % (filename)
+
+
+def publish():
+    posts_list = json.load(open('posts_list.json'))
+
+    for post in posts_list:
+        title = post["title"]
+        post_date = post["posted"]
+        source_filename = "contents/" + post["filename"].split("/")[1]
+        dest_filename = post["filename"]
+
+        outfile = open(dest_filename, 'w')
+        outfile.write(page_content_start % (title, title, post_date))
+        outfile.write(open(source_filename).read())
+        outfile.write(page_content_end % (ga_code))
+        outfile.close()
+
+        print "Published %s" % (title)
+
+    # Write all posts list in the index file
+    each_post_content = ""
+    for each_post in posts_list:
+        each_post_content += '''<li><a href="%s">%s</a> - %s</li>''' % (each_post["filename"], each_post["title"], each_post["posted"])
+    posts_list_content = "<ul>%s</ul>" % (each_post_content)
+    index_file_content = page_content_start % ("Blog Posts", "Blog Posts", "") + posts_list_content + page_content_end % (ga_code)
+
+    index_file = open('index.html', 'w')
+    index_file.write(index_file_content)
+    index_file.close()
+
+    print "Re-created index file"
 
 if __name__ == '__main__':
     command = sys.argv[1]
@@ -65,5 +101,7 @@ if __name__ == '__main__':
     elif command == "new":
         title = sys.argv[2]
         create_post(title)
+    elif command == "publish":
+        publish()
     else:
         sys.exit(0)
