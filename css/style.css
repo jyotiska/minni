@@ -1,0 +1,37 @@
+body {
+    max-width: 50em;
+    margin: 10px auto;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    line-height: 1.5;
+    color: #566b78;
+    -moz-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+    padding-top: 1em;
+    color: #333;
+    font-weight: 500;
+    -moz-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: #e81c4f;
+}
+
+code,
+pre {
+    background: #f5f7f9;
+    border-bottom: 1px solid #d8dee9;
+}
+
+pre {
+    border-left: 2px solid #69c;
+    padding: 1em;
+}
+
+code {
+    padding: 2px 4px;
+    vertical-align: text-bottom;
+}
