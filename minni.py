@@ -31,8 +31,8 @@ def create_post(title):
     """Create a new post."""
 
     # Create an empty contents file
-    filename = "contents/" + title.lower().replace(" ", "_") + ".html"
-    outfile = open(filename, 'w')
+    filename = "posts/" + title.lower().replace(" ", "_") + ".html"
+    outfile = open("contents/" + title.lower().replace(" ", "_") + ".html", 'w')
     outfile.close()
 
     # Calculate the post date based on current date
