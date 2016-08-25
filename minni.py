@@ -93,15 +93,19 @@ def publish():
     print "Re-created index file"
 
 if __name__ == '__main__':
-    command = sys.argv[1]
-    ga_code = 'UA-75679673-1'
-
-    if command == "init":
-        create_directory()
-    elif command == "new":
-        title = sys.argv[2]
-        create_post(title)
-    elif command == "publish":
-        publish()
-    else:
+    if len(sys.argv) < 2:
+        print "Usage: python minni.py <init/new/publish>"
         sys.exit(0)
+    else:
+        command = sys.argv[1]
+        ga_code = 'UA-75679673-1'
+        if command == "init":
+            create_directory()
+        elif command == "new":
+            title = sys.argv[2]
+            create_post(title)
+        elif command == "publish":
+            publish()
+        else:
+            print "Usage: python minni.py <init/new/publish>"
+            sys.exit(0)
