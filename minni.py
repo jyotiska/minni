@@ -40,8 +40,8 @@ def create_post(title):
 
     # Put the post in the posts list JSON file
     posts_list = json.load(open('posts_list.json'))
-    posts_list.append({"title": title, "filename": filename, "posted": post_date})
     posts_list = posts_list[::-1]
+    posts_list.append({"title": title, "filename": filename, "posted": post_date})
 
     # Write all posts list in the index file
     each_post_content = ""
@@ -59,7 +59,7 @@ def create_post(title):
     outfile.write(json.dumps(posts_list, indent=4))
     outfile.close()
 
-    print "Content file created. You can edit directly at: %s. Use <publish> with minni to publish all posts" % (filename)
+    print "Content file created. You can edit directly at: %s. Use <publish> with minni to publish all posts" % ("contents/" + title.lower().replace(" ", "_") + ".html")
 
 
 def publish():
