@@ -1,5 +1,5 @@
 # minni
-A minimal static site generator
+A minimal static site generator that powers [https://jyotiska.github.io/blog/]
 
 ### How to use
 
