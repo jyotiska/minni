@@ -27,6 +27,7 @@ pre {
 }
 
 pre {
+    white-space: pre-wrap;
     border-left: 2px solid #69c;
     padding: 1em;
 }
